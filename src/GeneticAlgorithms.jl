@@ -95,6 +95,7 @@ function runga(model::GAmodel)
 
     while true
         evaluate_population(model)
+        monitor(model)
 
         grouper = @task model.ga.group_entities(model.population)
         groupings = Any[]
@@ -109,17 +110,12 @@ function runga(model::GAmodel)
 
         crossover_population(model, groupings)
         mutate_population(model)
-        monitor(model)
     end
 
     model
 end
 
 # -------
-function monitor(model::GAmodel)
-  model.ga.monitor(model.population)
-end
-
 function reset_model(model::GAmodel)
     global _g_model = model
 
@@ -145,6 +141,10 @@ function evaluate_population(model::GAmodel)
     end
 
     sort!(model.population; rev = true)
+end
+
+function monitor(model::GAmodel)
+  model.ga.monitor(model.population)
 end
 
 function crossover_population(model::GAmodel, groupings)
