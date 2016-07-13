@@ -117,7 +117,7 @@ end
 
 # -------
 function monitor(model::GAmodel)
-  model.ga.monitor(model.population[1])
+  model.ga.monitor(model.population)
 end
 
 function reset_model(model::GAmodel)
