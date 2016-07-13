@@ -109,12 +109,16 @@ function runga(model::GAmodel)
 
         crossover_population(model, groupings)
         mutate_population(model)
+        monitor(model)
     end
 
     model
 end
 
 # -------
+function monitor(model::GAmodel)
+  println(model.population[1].fitness)
+end
 
 function reset_model(model::GAmodel)
     global _g_model = model
