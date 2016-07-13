@@ -117,7 +117,7 @@ end
 
 # -------
 function monitor(model::GAmodel)
-  println(model.population[1].fitness)
+  model.ga.monitor(model.population[1])
 end
 
 function reset_model(model::GAmodel)
