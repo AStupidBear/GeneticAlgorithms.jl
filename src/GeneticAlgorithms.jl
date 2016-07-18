@@ -81,19 +81,19 @@ generation_num(model::GAmodel = _g_model) = model.gen_num
 population(model::GAmodel = _g_model) = model.population
 
 
-function runga(mdl::Module; initial_pop_size = 128)
+function runga(mdl::Module; initial_pop_size = 128,o...)
     model = GAmodel()
     model.ga = mdl
     model.initial_pop_size = initial_pop_size
 
-    runga(model)
+    runga(model;o...)
 end
 
-function runga(model::GAmodel)
+function runga(model::GAmodel; max_gen = Inf)
     reset_model(model)
     create_initial_population(model)
 
-    while true
+    while model.gen_num < max_gen
         evaluate_population(model)
         monitor(model)
 
