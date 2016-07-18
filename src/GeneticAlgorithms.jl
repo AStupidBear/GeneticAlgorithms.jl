@@ -37,6 +37,7 @@ end
 type GAmodel
     initial_pop_size::Int
     gen_num::Int
+    max_gen::Int
 
     population::Array
     pop_data::Array{EntityData}
@@ -46,7 +47,7 @@ type GAmodel
 
     ga
 
-    GAmodel() = new(0, 1, Any[], EntityData[], EntityData[], MersenneTwister(time_ns()), nothing)
+    GAmodel() = new(0, 1, 10000, Any[], EntityData[], EntityData[], MersenneTwister(time_ns()), nothing)
 end
 
 global _g_model
@@ -81,19 +82,20 @@ generation_num(model::GAmodel = _g_model) = model.gen_num
 population(model::GAmodel = _g_model) = model.population
 
 
-function runga(mdl::Module; initial_pop_size = 128, max_gen = Inf)
+function runga(mdl::Module; initial_pop_size = 128, max_gen = 10000)
     model = GAmodel()
     model.ga = mdl
     model.initial_pop_size = initial_pop_size
+    model.max_gen = max_gen
 
-    runga(model, max_gen)
+    runga(model)
 end
 
-function runga(model::GAmodel, max_gen)
+function runga(model::GAmodel)
     reset_model(model)
     create_initial_population(model)
 
-    while true  #model.gen_num < max_gen
+    while model.gen_num < model.max_gen
         evaluate_population(model)
         monitor(model)
 
