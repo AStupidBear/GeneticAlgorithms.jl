@@ -93,7 +93,7 @@ function runga(model::GAmodel, max_gen)
     reset_model(model)
     create_initial_population(model)
 
-    while 1 #model.gen_num < max_gen
+    while true  #model.gen_num < max_gen
         evaluate_population(model)
         monitor(model)
 
