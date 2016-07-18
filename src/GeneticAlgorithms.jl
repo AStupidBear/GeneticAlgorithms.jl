@@ -95,8 +95,9 @@ function runga(model::GAmodel)
     reset_model(model)
     create_initial_population(model)
 
-    while model.gen_num < model.max_gen
+    while true
         evaluate_population(model)
+        if model.gen_num > model.max_gen; break; end
         monitor(model)
 
         grouper = @task model.ga.group_entities(model.population)
